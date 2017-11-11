@@ -34,6 +34,16 @@
                     <el-radio label="3">管理员</el-radio>
                 </el-radio-group>
             </div>
+            <div class="column">
+                <el-row>
+                    <el-col :span="12" class="btt">
+                        <el-button type="primary" @click="back">返回</el-button>
+                    </el-col>
+                    <el-col :span="12" class="btt">
+                        <el-button type="success">确认</el-button>
+                    </el-col>
+                </el-row>
+            </div>
         </div>
     </div>
 </template>
@@ -55,6 +65,9 @@
         methods: {
             goRegister() {
                 this.showModel++;
+            },
+            back() {
+                this.showModel--;
             }
         },
         mounted() {
@@ -134,7 +147,7 @@ html {
     overflow: hidden;
     margin: 100px auto;
     width: 600px;
-    height: 600px;
+    height: 500px;
     background: #fff;
     border-radius: 50px; 
     .column {
@@ -148,6 +161,9 @@ html {
         width: 300px;
         border: 1px solid #000;
         border-radius: 20px; 
+    }
+    .btt {
+        text-align: center;
     }
 }
 </style>
