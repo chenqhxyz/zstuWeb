@@ -1,0 +1,39 @@
+@import "../../../../../src/less/base";
+
+@bDateEditor: ~"@{block-prefix}-date-editor";
+
+.@{bDateEditor} {
+  position: relative;
+  display: inline-block;
+
+  &.b-input {
+    width: 193px;
+  }
+
+  .b-input__icon{
+    background: transparent;
+    border: 0;
+  }
+
+  &--daterange {
+    &.b-input {
+      width: 220px;
+    }
+  }
+
+  &--datetimerange {
+    &.b-input {
+      width: 350px;
+    }
+  }
+
+  .b-picker-panel {
+    position: absolute;
+    min-width: 180px;
+    box-sizing: border-box;
+    box-shadow: 0 2px 6px #ccc;
+    background: @bg-base;
+    z-index: 10;
+    top: 41px;
+  }
+}

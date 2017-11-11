@@ -1,0 +1,98 @@
+@import "../../../src/less/base";
+
+@bProgress: ~"@{block-prefix}-progress";
+@bProgressBar: ~"@{block-prefix}-progress-bar";
+
+.@{bProgress}{
+    position: relative;
+    line-height: 1;
+    &__text {
+      font-size:@font-base-size;
+      color:@font-base-color;
+      display: inline-block;
+      vertical-align: middle;
+      margin-left: 10px;
+      line-height: 1;
+
+      i {
+        vertical-align: middle;
+        display: block;
+      }
+    }
+    &--without-text {
+      .b-progress__text {
+        display: none;
+      }
+      .b-progress-bar {
+        padding-right: 0;
+        margin-right: 0;
+        display: block;
+      }
+    }
+    &--text-inside {
+      .b-progress-bar {
+        padding-right: 0;
+        margin-right: 0;
+      }
+    }
+    &.is-success {
+      .b-progress-bar__inner {
+        background-color: @color-success-fill;
+      }
+      .b-progress__text {
+        color: @color-success-fill;
+      }
+    }
+    &.is-exception {
+      .b-progress-bar__inner {
+        background-color: @color-error-fill;
+      }
+      .b-progress__text {
+        color: @color-error-fill;
+      }
+    }
+}
+.@{bProgressBar}{
+    padding-right: 50px;
+    display: inline-block;
+    vertical-align: middle;
+    width: 100%;
+    margin-right: -55px;
+    box-sizing: border-box;
+
+    &__outer {
+      height: 6px;
+      border-radius: 100px;
+      background-color: #e5e9f2;
+      overflow: hidden;
+      position: relative;
+      vertical-align: middle;
+    }
+    &__inner {
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      background-color: @color-info-fill;
+      border-radius: 100px;
+      line-height: 1;
+      text-align: center;
+      .vertical-center();
+    }
+    &__innerText {
+      display: inline-block;
+      vertical-align: middle;
+      color: #fff;
+      font-size: 12px;
+      margin: 0 5px;
+    }
+}
+
+@keyframes progress {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 32px 0;
+  }
+}

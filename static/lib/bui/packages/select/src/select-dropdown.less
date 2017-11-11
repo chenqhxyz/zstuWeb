@@ -1,0 +1,25 @@
+@import "../../../src/less/base";
+
+@bSelectDropdown:~"@{block-prefix}-select-dropdown";
+
+  .@{bSelectDropdown} {
+    position: absolute;
+    z-index: 1001;
+    border: @border-base;
+    border-radius: @radius-base;
+    background-color: @select-dropdown-background;
+    box-shadow: @select-dropdown-shadow;
+    box-sizing: border-box;
+    margin: 5px 0;
+
+    &__wrap {
+      max-height: @select-dropdown-max-height;
+    }
+
+    &__list {
+      list-style: none;
+      padding: @select-dropdown-padding;
+      margin: 0;
+      box-sizing: border-box;
+    }
+  }

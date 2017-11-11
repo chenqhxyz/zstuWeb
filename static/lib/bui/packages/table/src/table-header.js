@@ -1,0 +1,399 @@
+
+const getAllColumns = (columns) => {
+  const result = [];
+  columns.forEach((column) => {
+    if (column.children) {
+      result.push(column);
+      result.push.apply(result, getAllColumns(column.children));
+    } else {
+      result.push(column);
+    }
+  });
+  return result;
+};
+
+const convertToRows = (originColumns) => {
+  let maxLevel = 1;
+  const traverse = (column, parent) => {
+    if (parent) {
+      column.level = parent.level + 1;
+      if (maxLevel < column.level) {
+        maxLevel = column.level;
+      }
+    }
+    if (column.children) {
+      let childrenMax = 1;
+      let colSpan = 0;
+      column.children.forEach((subColumn) => {
+        const temp = traverse(subColumn, column);
+        if (temp > childrenMax) {
+          childrenMax = temp;
+        }
+        colSpan += subColumn.colSpan;
+      });
+      column.colSpan = colSpan;
+    } else {
+      column.colSpan = 1;
+    }
+  };
+
+  originColumns.forEach((column) => {
+    column.level = 1;
+    traverse(column);
+  });
+
+  const rows = [];
+  for (let i = 0; i < maxLevel; i++) {
+    rows.push([]);
+  }
+
+  const allColumns = getAllColumns(originColumns);
+
+  allColumns.forEach((column) => {
+    if (!column.children) {
+      column.rowSpan = maxLevel - column.level + 1;
+    } else {
+      column.rowSpan = 1;
+    }
+    rows[column.level - 1].push(column);
+  });
+
+  return rows;
+};
+
+export default {
+  name: 'BTableHeader',
+
+  render(h) {
+    const originColumns = this.store.states.originColumns;
+    const columnRows = convertToRows(originColumns, this.columns);
+
+    return (
+      <table
+        class="b-table__header"
+        cellspacing="0"
+        cellpadding="0"
+        border="0">
+        <colgroup>
+          {
+            this._l(this.columns, column =>
+              <col
+                name={ column.id }
+                width={ column.realWidth || column.width }
+              />)
+          }
+          {
+            !this.fixed && this.layout.gutterWidth
+              ? <col name="gutter" width={ this.layout.scrollY ? this.layout.gutterWidth : '' }></col>
+              : ''
+          }
+        </colgroup>
+        <thead>
+          {
+            this._l(columnRows, (columns, rowIndex) =>
+              <tr>
+              {
+                this._l(columns, (column, cellIndex) =>
+                  <th
+                    colspan={ column.colSpan }
+                    rowspan={ column.rowSpan }
+                    on-mousemove={ ($event) => this.handleMouseMove($event, column) }
+                    on-mouseout={ this.handleMouseOut }
+                    on-mousedown={ ($event) => this.handleMouseDown($event, column) }
+                    on-click={ ($event) => this.handleHeaderClick($event, column) }
+                    class={ [column.id, column.order, column.headerAlign, column.className || '', rowIndex === 0 && this.isCellHidden(cellIndex) ? 'is-hidden' : '', !column.children ? 'is-leaf' : ''] }>
+                    <div class={ ['cell', column.filteredValue && column.filteredValue.length > 0 ? 'highlight' : ''] }>
+                    {
+                      column.renderHeader
+                        ? column.renderHeader.call(this._renderProxy, h, { column, $index: cellIndex, store: this.store, _self: this.$parent.$vnode.context })
+                        : column.label
+                    }
+                    {
+                      column.sortable
+                        ? <span class="caret-wrapper" on-click={ ($event) => this.handleSortClick($event, column) }>
+                            <i class="sort-caret ascending"></i>
+                            <i class="sort-caret descending"></i>
+                          </span>
+                        : ''
+                    }
+                    </div>
+                  </th>
+                )
+              }
+              {
+                !this.fixed && this.layout.gutterWidth
+                  ? <th class="gutter" style={{ width: this.layout.scrollY ? this.layout.gutterWidth + 'px' : '0' }}></th>
+                  : ''
+              }
+              </tr>
+            )
+          }
+        </thead>
+      </table>
+    );
+  },
+
+  props: {
+    fixed: String,
+    store: {
+      required: true
+    },
+    layout: {
+      required: true
+    },
+    border: Boolean,
+    defaultSort: {
+      type: Object,
+      default() {
+        return {
+          prop: '',
+          order: ''
+        };
+      }
+    }
+  },
+
+  components: {
+  },
+
+  computed: {
+    isAllSelected() {
+      return this.store.states.isAllSelected;
+    },
+
+    isIndeterminate() {
+      return !this.store.states.isAllSelected && (this.store.states.selection || []).length > 0;
+    },
+
+    columnsCount() {
+      return this.store.states.columns.length;
+    },
+
+    leftFixedCount() {
+      return this.store.states.fixedColumns.length;
+    },
+
+    rightFixedCount() {
+      return this.store.states.rightFixedColumns.length;
+    },
+
+    columns() {
+      return this.store.states.columns;
+    }
+  },
+
+  created() {
+    this.filterPanels = {};
+  },
+
+  mounted() {
+    if (this.defaultSort.prop) {
+      const states = this.store.states;
+      states.sortProp = this.defaultSort.prop;
+      states.sortOrder = this.defaultSort.order || 'ascending';
+      this.$nextTick(_ => {
+        for (let i = 0, length = this.columns.length; i < length; i++) {
+          let column = this.columns[i];
+          if (column.property === states.sortProp) {
+            column.order = states.sortOrder;
+            states.sortingColumn = column;
+            break;
+          }
+        }
+
+        if (states.sortingColumn) {
+          this.store.commit('changeSortCondition');
+        }
+      });
+    }
+  },
+
+  beforeDestroy() {
+    const panels = this.filterPanels;
+    for (let prop in panels) {
+      if (panels.hasOwnProperty(prop) && panels[prop]) {
+        panels[prop].$destroy(true);
+      }
+    }
+  },
+
+  methods: {
+    isCellHidden(index) {
+      if (this.fixed === true || this.fixed === 'left') {
+        return index >= this.leftFixedCount;
+      } else if (this.fixed === 'right') {
+        return index < this.columnsCount - this.rightFixedCount;
+      } else {
+        return (index < this.leftFixedCount) || (index >= this.columnsCount - this.rightFixedCount);
+      }
+    },
+
+    toggleAllSelection() {
+      this.store.commit('toggleAllSelection');
+    },
+
+    handleHeaderClick(event, column) {
+      if (!column.filters && column.sortable) {
+        this.handleSortClick(event, column);
+      }
+
+      this.$parent.$emit('header-click', column, event);
+    },
+
+    handleMouseDown(event, column) {
+      if (this.$isServer) return;
+      if (column.children && column.children.length > 0) return;
+      /* istanbul ignore if */
+      if (this.draggingColumn && this.border) {
+        this.dragging = true;
+
+        this.$parent.resizeProxyVisible = true;
+
+        const tableEl = this.$parent.$el;
+        const tableLeft = tableEl.getBoundingClientRect().left;
+        const columnEl = this.$el.querySelector(`th.${column.id}`);
+        const columnRect = columnEl.getBoundingClientRect();
+        const minLeft = columnRect.left - tableLeft + 30;
+
+        columnEl.classList.add('noclick');
+
+        this.dragState = {
+          startMouseLeft: event.clientX,
+          startLeft: columnRect.right - tableLeft,
+          startColumnLeft: columnRect.left - tableLeft,
+          tableLeft
+        };
+
+        const resizeProxy = this.$parent.$refs.resizeProxy;
+        resizeProxy.style.left = this.dragState.startLeft + 'px';
+
+        document.onselectstart = function() { return false; };
+        document.ondragstart = function() { return false; };
+
+        const handleMouseMove = (event) => {
+          const deltaLeft = event.clientX - this.dragState.startMouseLeft;
+          const proxyLeft = this.dragState.startLeft + deltaLeft;
+
+          resizeProxy.style.left = Math.max(minLeft, proxyLeft) + 'px';
+        };
+
+        const handleMouseUp = () => {
+          if (this.dragging) {
+            const finalLeft = parseInt(resizeProxy.style.left, 10);
+            const columnWidth = finalLeft - this.dragState.startColumnLeft;
+            column.width = column.realWidth = columnWidth;
+
+            this.store.scheduleLayout();
+
+            document.body.style.cursor = '';
+            this.dragging = false;
+            this.draggingColumn = null;
+            this.dragState = {};
+
+            this.$parent.resizeProxyVisible = false;
+          }
+
+          document.removeEventListener('mousemove', handleMouseMove);
+          document.removeEventListener('mouseup', handleMouseUp);
+          document.onselectstart = null;
+          document.ondragstart = null;
+
+          setTimeout(function() {
+            columnEl.classList.remove('noclick');
+          }, 0);
+        };
+
+        document.addEventListener('mousemove', handleMouseMove);
+        document.addEventListener('mouseup', handleMouseUp);
+      }
+    },
+
+    handleMouseMove(event, column) {
+      if (column.children && column.children.length > 0) return;
+      let target = event.target;
+      while (target && target.tagName !== 'TH') {
+        target = target.parentNode;
+      }
+
+      if (!column || !column.resizable) return;
+
+      if (!this.dragging && this.border) {
+        let rect = target.getBoundingClientRect();
+
+        const bodyStyle = document.body.style;
+        if (rect.width > 12 && rect.right - event.pageX < 8) {
+          bodyStyle.cursor = 'col-resize';
+          this.draggingColumn = column;
+        } else if (!this.dragging) {
+          bodyStyle.cursor = '';
+          this.draggingColumn = null;
+        }
+      }
+    },
+
+    handleMouseOut() {
+      if (this.$isServer) return;
+      document.body.style.cursor = '';
+    },
+
+    toggleOrder(column) {
+      if (column.order === 'ascending') {
+        return 'descending';
+      }
+      return 'ascending';
+    },
+
+    handleSortClick(event, column) {
+      event.stopPropagation();
+      let order = this.toggleOrder(column);
+
+      let target = event.target;
+      while (target && target.tagName !== 'TH') {
+        target = target.parentNode;
+      }
+
+      if (target && target.tagName === 'TH') {
+        if (target.classList.contains('noclick')) {
+          target.classList.remove('noclick');
+          return;
+        }
+      }
+
+      if (!column.sortable) return;
+
+      const states = this.store.states;
+      let sortProp = states.sortProp;
+      let sortOrder;
+      const sortingColumn = states.sortingColumn;
+
+      if (sortingColumn !== column) {
+        if (sortingColumn) {
+          sortingColumn.order = null;
+        }
+        states.sortingColumn = column;
+        sortProp = column.property;
+      }
+
+      if (column.order === order) {
+        sortOrder = column.order = null;
+        states.sortingColumn = null;
+        sortProp = null;
+      } else {
+        sortOrder = column.order = order;
+      }
+
+      states.sortProp = sortProp;
+      states.sortOrder = sortOrder;
+
+      this.store.commit('changeSortCondition');
+    }
+  },
+
+  data() {
+    return {
+      draggingColumn: null,
+      dragging: false,
+      dragState: {}
+    };
+  }
+};

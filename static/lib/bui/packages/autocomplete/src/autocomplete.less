@@ -1,0 +1,74 @@
+@import "../../../src/less/base";
+
+@bAutocomplete: ~"@{block-prefix}-autocomplete";
+
+.@{bAutocomplete} {
+  position: relative;
+  display: inline-block;
+
+  &__suggestions {
+    position: absolute;
+    left: 0;
+    top: 110%;
+    margin: 5px 0 0;
+    background-color: #FFF;
+    border: @border-base;
+    width: 100%;
+    padding: 6px 0;
+    z-index: 10;
+    border-radius: 2px;
+    max-height: 266px;
+    box-sizing: border-box;
+    overflow: auto;
+    box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.04), 0 2px 4px 0 rgba(0, 0, 0, 0.12);
+
+    & li {
+      list-style: none;
+      line-height: 36px;
+      padding: 0 10px;
+      margin: 0;
+      cursor: pointer;
+      color: @color-base;
+      font-size: 14px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+
+      &:hover {
+        background-color: #F7F9FC;
+      }
+      &.highlighted {
+        background-color: #F7F9FC;
+      }
+      &:active {
+        background-color: darken(#F7F9FC, 0.2);
+      }
+      &.divider {
+        margin-top: 6px;
+        border-top: @border-base;
+      }
+      &.divider:last-child {
+        margin-bottom: -6px;
+      }
+    }
+
+    &.is-loading {
+      li {
+        text-align: center;
+        height: 100px;
+        line-height: 100px;
+        font-size: 20px;
+        color: #999;
+        .vertical-center();
+
+        &:hover {
+          background-color: #FFF;
+        }
+      }
+
+      & .b-icon-loading {
+        vertical-align: middle;
+      }
+    }
+  }
+}

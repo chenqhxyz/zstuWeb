@@ -1,0 +1,243 @@
+@import "../../../src/less/base";
+
+@bPagination: ~"@{block-prefix}-pagination";
+@bPager: ~"@{block-prefix}-pager";
+
+.@{bPagination} {
+  white-space: nowrap;
+  padding: 2px 5px;
+  color: @pagination-color;
+  .clearfix();
+
+  span,
+  button {
+    display: inline-block;
+    font-size: @pagination-font-size;
+    min-width: @pagination-button-size;
+    height: @pagination-button-size;
+    line-height: @pagination-button-size;
+    vertical-align: top;
+    box-sizing: border-box;
+  }
+
+  button {
+    border: none;
+    padding: 0 6px;
+    background: @bg-base;
+
+    &:focus {
+      outline: none;
+    }
+
+    &:hover {
+      color: @pagination-hover-fill;
+    }
+
+    &:focus, &:hover {
+      background: @bg-base;
+      border:@border-base;
+    }
+
+    &.disabled {
+      color: @color-disabled;
+      cursor: not-allowed;
+    }
+  }
+
+  .btn-prev,
+  .btn-next {
+    position: static;
+    background: center center no-repeat;
+    background-size: 16px;
+    background-color: @bg-base;
+    border: @border-base;
+    border-radius: @pagination-radius;
+    cursor: pointer;
+    margin: 0;
+    color: @pagination-color;
+
+    .b-icon {
+      display: block;
+      font-size: 12px;
+    }
+  }
+
+  & when (@pagination-interval = 0) {
+    .btn-prev{
+      border-radius: @pagination-radius 0 0  @pagination-radius;
+    }
+    .btn-next{
+      border-radius: 0 @pagination-radius @pagination-radius 0;
+    }
+  }
+
+  .btn-prev {
+    margin-right: @pagination-interval;
+  }
+
+  &--small {
+    .btn-prev,
+    .btn-next,
+    .b-pager li,
+    .b-pager li:last-child {
+      border-color: transparent;
+      font-size: 14px;
+      line-height: 20px;
+      height: 20px;
+      min-width: 20px;
+      margin: 0!important;
+    }
+
+    .btn-prev,
+    .btn-next{
+      &:hover,&:focus{
+        border-color: transparent;
+      }
+    }
+
+    .arrow.disabled {
+      visibility: hidden;
+    }
+
+    .b-pager li when (@pagination-interval > 0){
+      border-radius: @pagination-radius;
+    }
+  }
+
+  &--infin {
+    button {
+      padding: 0 14px;
+      border-radius: 4px;
+    }
+
+    .btn-prev{
+      margin-right: 10px;
+    }
+
+    .btn-prev .b-icon {
+      &:after {
+        content: "\4e0a\4e00\9875";
+        display: inline-block;
+        margin-left: 3px;
+        vertical-align: middle;
+      }
+    }
+    .btn-next .b-icon {
+      &:before {
+        content: "\4e0b\4e00\9875";
+        display: inline-block;
+        margin-right: 3px;
+        vertical-align: middle;
+      }
+      &:after {
+        content: "\E602";
+      }
+    }
+  }
+
+  &__jump {
+    margin-left: 10px;
+    button {
+      margin-left: 6px;
+      border: @border-base;
+      padding: 0;
+    }
+  }
+
+  &__total, &__infin {
+    margin: 0 10px;
+  }
+
+  &__rightwrapper {
+    float: right;
+  }
+
+  &__editor {
+    border: @border-base;
+    width: @pagination-button-size;
+    height: @pagination-button-size;
+    line-height: @pagination-button-size;
+    text-align: center;
+    margin: 0 6px;
+    box-sizing: border-box;
+    transition: border .3s;
+
+    &::-webkit-inner-spin-button,
+    &::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: @pagination-hover-fill;
+    }
+  }
+
+}
+
+.@{bPager} {
+  list-style: none;
+  display: inline-block;
+  vertical-align: top;
+  font-size: 0;
+  padding: 0;
+  margin: 0;
+  .user-select-none();
+
+  li {
+    padding: 0 4px;
+    margin-right: @pagination-interval;
+    border: @border-base;
+    border-radius: @pagination-radius;
+    background: @bg-base;
+    vertical-align: top;
+    display: inline-block;
+    font-size: @pagination-font-size;
+    min-width: @pagination-button-size;
+    height: @pagination-button-size;
+    line-height: @pagination-button-size;
+    cursor: pointer;
+    box-sizing: border-box;
+    text-align: center;
+
+    &.more when ( @pagination-interval > 0) {
+      border: 0;
+    }
+
+    &.btn-quicknext,
+    &.btn-quickprev {
+      color: @pagination-color;
+    }
+
+    &.btn-quickprev:hover {
+      cursor: pointer;
+    }
+
+    &.btn-quicknext:hover {
+      cursor: pointer;
+    }
+
+    &:hover {
+      color: @pagination-hover-fill;
+    }
+
+    &.active {
+      border-color: @pagination-hover-fill;
+      background-color: @pagination-hover-fill;
+      color: #FFF;
+      cursor: default;
+    }
+
+    & when ( @pagination-interval = 0) {
+      margin-left: -@border-base-size;
+      border-radius: 0;
+      &:last-child{
+        margin-right: -@border-base-size;
+      }
+    }
+
+
+  }
+}
+

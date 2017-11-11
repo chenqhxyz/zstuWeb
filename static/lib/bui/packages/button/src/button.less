@@ -1,0 +1,80 @@
+@import "../../../src/less/base";
+@import '../../../src/less/mixins/_button';
+
+@bButton: ~"@{block-prefix}-button";
+
+.@{bButton} {
+    display: inline-block;
+    line-height: 1;
+    white-space: nowrap;
+    cursor: pointer;
+    -webkit-appearance: none;
+    text-align: center;
+    box-sizing: border-box;
+    outline: none;
+    margin: 0;
+    border: 1px solid transparent;
+    .user-select-none();
+    & + & {
+      margin-left: 10px;
+    }
+
+    &::-moz-focus-inner {
+      border: 0;
+    }
+
+    // 主题
+    .button-variant(@button-default-color,@button-default-fill,@button-default-border-color);
+
+    &&--primary {
+      .button-variant(@button-primary-color,@button-primary-fill,@button-primary-border-color);
+    }
+
+    &&--ghost {
+      .button-variant(@button-ghost-color,@button-ghost-fill,@button-ghost-border-color);
+    }
+
+    &.is-disabled {
+      &,
+      &:hover,
+      &:focus {
+        background: @bg-disabled;
+        color: @color-disabled;
+        border-color: @button-default-border-color;
+        cursor: not-allowed;
+      }
+    }
+
+    // 尺寸
+    .button-size(@button-padding-vertical,@button-padding-horizontal,@button-font-size,@button-border-radius);
+
+    &.@{bButton}--large {
+      .button-size(@button-large-padding-vertical,@button-large-padding-horizontal,@button-large-font-size,@button-border-radius);
+    }
+
+    &.@{bButton}--small {
+      .button-size(@button-small-padding-vertical,@button-small-padding-horizontal,@button-small-font-size,@button-border-radius);
+    }
+
+    &.is-width{
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    &.is-loading{
+      position: relative;
+      pointer-events: none;
+
+      &:before{
+        position: absolute;
+        pointer-events: none;
+        content: '';
+        top: -1px;
+        bottom: -1px;
+        left: -1px;
+        right: -1px;
+        border-radius: inherit;
+        background-color: rgba(255,255,255,.35);
+      }
+    }
+}

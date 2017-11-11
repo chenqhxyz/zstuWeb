@@ -1,0 +1,76 @@
+@import "../../../src/less/base";
+
+@bForm: ~"@{block-prefix}-form";
+@bFormItem: ~"@{block-prefix}-form-item";
+
+  .@{bForm} {
+    &--inline {
+      .@{bFormItem} {
+        display: inline-block;
+        margin-right: 10px;
+        vertical-align: top;
+
+        &__label{
+          display: inline-block;
+          float: none;
+        }
+
+        &__content{
+          display: inline-block;
+        }
+      }
+    }
+  }
+  .@{bFormItem} {
+    margin-bottom: 22px;
+    .clearfix();
+
+    .@{bFormItem} {
+      margin-bottom: 0;
+
+      .@{bFormItem}__content {
+        margin-left: 0 !important;
+      }
+    }
+
+    &__label {
+      text-align: right;
+      vertical-align: middle;
+      float: left;
+      font-size: 14px;
+      color: @color-base;
+      line-height: 1;
+      padding: 11px 12px 11px 0;
+      box-sizing: border-box;
+    }
+    &__content {
+      line-height: 36px;
+      position: relative;
+      font-size: 14px;
+      .clearfix();
+    }
+    &__error {
+      color: @color-error;
+      font-size: 12px;
+      line-height: 1;
+      padding-top: 4px;
+      position: absolute;
+      top: 100%;
+      left: 0;
+    }
+
+    &.is-required {
+      .@{bFormItem}__label:before {
+        content: '*';
+        color: @color-error;
+        margin-right: 4px;
+      }
+    }
+
+    &.is-error {
+      & .b-input__inner,
+      & .b-textarea__inner {
+        border-color: @color-error;
+      }
+    }
+  }

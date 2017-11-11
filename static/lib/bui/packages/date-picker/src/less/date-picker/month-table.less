@@ -1,0 +1,42 @@
+@charset "UTF-8";
+@import "../../../../../src/less/base";
+
+@bMonthTable: ~"@{block-prefix}-month-table";
+
+.@{bMonthTable} {
+  font-size: 12px;
+  margin: -1px;
+  border-collapse: collapse;
+
+  td {
+    text-align: center;
+    padding: 20px 3px;
+    cursor: pointer;
+
+    &.disabled .cell {
+      background-color: #f4f4f4;
+      cursor: not-allowed;
+      color: #ccc;
+      &:hover {
+        background-color: #f4f4f4;
+      }
+    }
+
+    .cell {
+      width: 48px;
+      height: 32px;
+      display: block;
+      line-height: 32px;
+      color: @datepicker-color;
+
+      &:hover {
+        background-color: @datepicker-cell-hover-color;
+      }
+    }
+
+    &.current .cell {
+      background-color: @datepicker-active-color !important;
+      color: #FFF;
+    }
+  }
+}

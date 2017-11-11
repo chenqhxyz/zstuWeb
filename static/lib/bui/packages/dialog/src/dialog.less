@@ -1,0 +1,192 @@
+@import "../../../src/less/base";
+
+@bDialog: ~"@{block-prefix}-dialog";
+
+.@{bDialog} {
+  display: inline-block;
+  vertical-align: middle;
+  text-align: left;
+  position: relative;
+  border: 1px solid #E1E4EA;
+  border-radius: @dialog-border-radius;
+  box-shadow: @dialog-box-shadow;
+  box-sizing: border-box;
+  background: @bg-base;
+
+  &.@{bDialog}--tiny {
+    width: @dialog-tiny-width;
+  }
+
+  &.@{bDialog}--small {
+    width: @dialog-small-width;
+  }
+
+  &.@{bDialog}--large {
+    width: @dialog-large-width;
+  }
+
+  &.@{bDialog}--full {
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+  }
+}
+
+// 隐现模式样式
+.@{bDialog}--fade {
+  .@{bDialog}__header {
+    padding: 20px 20px 0;
+  }
+
+  .@{bDialog}__close {
+    cursor: pointer;
+    color: @color-icon;
+
+    &:hover {
+      color: @dialog-close-hover-color;
+    }
+  }
+
+  .@{bDialog}__title {
+    line-height: 1;
+    font-size: @dialog-title-font-size;
+    font-weight: bold;
+    color: @dialog-color;
+  }
+
+  .@{bDialog}__body {
+    padding: 30px 20px;
+    color: @dialog-color;
+    font-size: @dialog-font-size;
+  }
+
+  .@{bDialog}__headerbtn {
+    float: right;
+  }
+
+  .@{bDialog}__footer {
+    padding: 10px 20px 15px;
+    text-align: right;
+    box-sizing: border-box;
+  }
+}
+
+// 滑入模式样式
+.@{bDialog}--slide {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  .@{bDialog}__header {
+    padding: 20px 20px 0;
+  }
+
+  .@{bDialog}__headerbtn {
+    position: absolute;
+    top: 0;
+    left: -60px;
+    width: 60px;
+    height: 60px;
+    background: @color-primary;
+    text-align: center;
+    line-height: 66px;
+  }
+  .@{bDialog}__close {
+    cursor: pointer;
+    color: #fff;
+    font-size: 26px;
+  }
+
+  .@{bDialog}__title {
+    line-height: 1;
+    font-size: @dialog-title-font-size;
+    font-weight: bold;
+    color: @dialog-color;
+  }
+
+  .@{bDialog}__body {
+    padding: 30px 20px;
+    color: @dialog-color;
+    font-size: @dialog-font-size;
+  }
+
+
+
+  .@{bDialog}__footer {
+    padding: 10px 20px 15px;
+    text-align: right;
+    box-sizing: border-box;
+  }
+}
+
+.@{bDialog}__wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  overflow: auto;
+  margin: 0;
+  text-align: center;
+  .vertical-center();
+}
+
+.dialog-fade-enter-active {
+  animation: dialog-fade-in .3s;
+}
+
+.dialog-fade-leave-active {
+  animation: dialog-fade-out .3s;
+}
+
+@keyframes dialog-fade-in {
+  0% {
+    transform: translate(0, -20px);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(0, 0);
+    opacity: 1;
+  }
+}
+
+@keyframes dialog-fade-out {
+  0% {
+    transform: translate(0, 0);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(0, -20px);
+    opacity: 0;
+  }
+}
+
+.dialog-slide-enter-active {
+  animation: dialog-slide-in .5s;
+}
+
+.dialog-slide-leave-active {
+  animation: dialog-slide-out .5s;
+}
+
+@keyframes dialog-slide-in {
+  0% {
+    transform: translate(800px, 0);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(0, 0);
+    opacity: 1;
+  }
+}
+
+@keyframes dialog-slide-out {
+  0% {
+    transform: translate(0, 0);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(800px, 0);
+    opacity: 0;
+  }
+}
