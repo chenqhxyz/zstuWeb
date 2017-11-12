@@ -40,7 +40,7 @@
                         <el-button type="primary" @click="back">返回</el-button>
                     </el-col>
                     <el-col :span="12" class="btt">
-                        <el-button type="success">确认</el-button>
+                        <el-button type="success" @click="confirm">确认</el-button>
                     </el-col>
                 </el-row>
             </div>
@@ -49,6 +49,7 @@
 </template>
       
 <script>
+import register from '../../util/util';
     export default {
         data() {
             return {
@@ -68,6 +69,42 @@
             },
             back() {
                 this.showModel--;
+            },
+            confirm() {
+                if (!this.realName) {
+                    this.$message({
+                        message: '请输入真实姓名',
+                        type: 'warning'
+                    });
+                } else if (!this.regAcconut) {
+                    this.$message({
+                        message: '请输入账号',
+                        type: 'warning'
+                    });
+                } else if (!this.regPass) {
+                    this.$message({
+                        message: '请输入密码',
+                        type: 'warning'
+                    });
+                } else if (!this.repeatPass) {
+                    this.$message({
+                        message: '请重复输入密码',
+                        type: 'warning'
+                    });
+                } else if (this.repeatPass !== this.regPass) {
+                    this.$message({
+                        message: '两次密码不一致',
+                        type: 'warning'
+                    });
+                } else {
+                    const info = `${this.realName},${this.regAcconut},${this.regPass}`;
+                    register.register(info).then((res) => {
+                        this.$message({
+                            message: res.msg,
+                            type: 'success'
+                        });
+                    });
+                }
             }
         },
         mounted() {
