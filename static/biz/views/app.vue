@@ -97,12 +97,19 @@ import register from '../../util/util';
                         type: 'warning'
                     });
                 } else {
-                    const info = `${this.realName},${this.regAcconut},${this.regPass}`;
+                    const info = `${this.realName},${this.regAcconut},${this.regPass},${this.radio}`;
                     register.register(info).then((res) => {
-                        this.$message({
-                            message: res.msg,
-                            type: 'success'
-                        });
+                        if (res.success) {
+                            this.$message({
+                                message: res.msg,
+                                type: 'success'
+                            });
+                        } else {
+                            this.$message({
+                                message: '账号已被注册！',
+                                type: 'warning'
+                            });
+                        }
                     });
                 }
             }
