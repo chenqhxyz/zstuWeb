@@ -104,6 +104,7 @@ import register from '../../util/util';
                                 message: res.msg,
                                 type: 'success'
                             });
+                            this.showModel--;
                         } else {
                             this.$message({
                                 message: '账号已被注册！',
