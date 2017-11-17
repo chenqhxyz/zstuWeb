@@ -14,6 +14,7 @@ function resolve(dir) {
 
 module.exports = {
     entry: {
+        zstu: './static/biz/manage/index.js',
         index: './static/biz/index.js'
     },
     output: {

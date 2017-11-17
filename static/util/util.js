@@ -35,7 +35,24 @@ const login = (account, password) =>
             }
         });
     });
+const checkLogin = () => 
+    new Promise((resolve, reject) => {
+        $.ajax({
+            type: 'GET',
+            url: '/check',
+            data: {},
+            dataType: 'json',
+            cache: false,
+            success(resp) {
+                resolve(resp);
+            },
+            error(resp) {
+                reject(resp);
+            }
+        });
+    });
 export default {
     register,
-    login
+    login,
+    checkLogin
 }

@@ -132,6 +132,7 @@ import register from '../../util/util';
                                 message: '登陆成功',
                                 type: 'success'
                             });
+                            window.location.href = '/zstu.html';
                         } else {
                             this.$message({
                                 message: resp.msg,
