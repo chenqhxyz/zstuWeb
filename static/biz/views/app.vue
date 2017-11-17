@@ -10,7 +10,7 @@
             </div>
             <div class="btt-area">
                 <div class="register" @click="goRegister">注 册</div>
-                <div class="login">登 录</div>
+                <div class="login" @click="login">登 录</div>
             </div>
         </div>
         <div class="register-area" v-show="showModel === 2">
@@ -108,6 +108,33 @@ import register from '../../util/util';
                         } else {
                             this.$message({
                                 message: '账号已被注册！',
+                                type: 'warning'
+                            });
+                        }
+                    });
+                }
+            },
+            login() {
+                if (!this.account) {
+                    this.$message({
+                        message: '请输入账号',
+                        type: 'warning'
+                    });
+                } else if (!this.password) {
+                    this.$message({
+                        message: '请输入密码',
+                        type: 'warning'
+                    });
+                } else {
+                    register.login(this.account, this.password).then((resp) => {
+                        if (resp.success) {
+                            this.$message({
+                                message: '登陆成功',
+                                type: 'success'
+                            });
+                        } else {
+                            this.$message({
+                                message: resp.msg,
                                 type: 'warning'
                             });
                         }
