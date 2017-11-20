@@ -1,7 +1,5 @@
 <template>
-   <div>
-        <components :is="currentView" :resp-name="respName"></components>
-   </div>
+    <components :is="currentView" :resp-name="respName"></components>
 </template>
       
 <script>
@@ -42,5 +40,6 @@ import Teacher from './teacher.vue';
 </script>
       
 <style lang="less">
-
+@import '../../reset.less';
+.reset();
 </style>
