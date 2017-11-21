@@ -51,8 +51,65 @@ const checkLogin = () =>
             }
         });
     });
+
+const addEquip = (equipName, position, amount) => 
+    new Promise((resolve, reject) => {
+        $.ajax({
+            type: 'GET',
+            url: '/equip',
+            data: {
+                equipName,
+                position,
+                amount
+            },
+            dataType: 'json',
+            cache: false,
+            success(resp) {
+                resolve(resp);
+            },
+            error(resp) {
+                reject(resp);
+            }
+        });
+    });
+const getEquip = () => 
+    new Promise((resolve, reject) => {
+        $.ajax({
+            type: 'GET',
+            url: '/getequip',
+            data: {},
+            dataType: 'json',
+            cache: true,
+            success(resp) {
+                resolve(resp);
+            },
+            error(resp) {
+                reject(resp);
+            }
+        })
+    });
+const editEquip = (data) => 
+    new Promise((resolve, reject) => {
+        $.ajax({
+            type: 'GET',
+            url: '/editequip',
+            data,
+            dataType: 'json',
+            cache: true,
+            success(resp) {
+                resolve(resp);
+            },
+            error(resp) {
+                reject(resp);
+            }
+        })
+    })
+
 export default {
     register,
     login,
-    checkLogin
+    checkLogin,
+    addEquip,
+    getEquip,
+    editEquip
 }
