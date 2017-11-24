@@ -24,12 +24,14 @@
             </el-aside>
             <el-main>
                 <div class="hello" v-show="index === 0">你好，管理员</div>
-                <equip v-show="index === 1"></equip>
+                <equip v-if="index === 1"></equip>
+                <lab v-if="index === 2"></lab>
             </el-main>
         </el-container>   
 </template>
 <script>
     import Equip from './manage/equip.vue';
+    import Lab from './manage/lab.vue';
     export default {
         props: ['respName'],
         data() {
@@ -43,11 +45,12 @@
             }
         },
         components: {
-            Equip
+            Equip,
+            Lab
         }
     }
 </script>
-           
+
 <style lang="less">
     .el-menu-vertical {
         width: 200px;
@@ -59,6 +62,7 @@
             line-height: 50px;
         }
     }
+    
     .hello {
         position: absolute;
         left: 0;
@@ -67,5 +71,5 @@
         text-align: center;
         font-size: 80px;
         color: #5b75b7;
-     }
+    }
 </style>

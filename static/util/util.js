@@ -12,11 +12,11 @@ const register = (info) =>
                 resolve(resp);
             },
             error(resp) {
-            	reject(resp);
+                reject(resp);
             }
         });
     });
-const login = (account, password) => 
+const login = (account, password) =>
     new Promise((resolve, reject) => {
         $.ajax({
             type: 'GET',
@@ -35,7 +35,7 @@ const login = (account, password) =>
             }
         });
     });
-const checkLogin = () => 
+const checkLogin = () =>
     new Promise((resolve, reject) => {
         $.ajax({
             type: 'GET',
@@ -52,7 +52,7 @@ const checkLogin = () =>
         });
     });
 
-const addEquip = (equipName, position, amount) => 
+const addEquip = (equipName, position, amount) =>
     new Promise((resolve, reject) => {
         $.ajax({
             type: 'GET',
@@ -72,7 +72,7 @@ const addEquip = (equipName, position, amount) =>
             }
         });
     });
-const getEquip = () => 
+const getEquip = () =>
     new Promise((resolve, reject) => {
         $.ajax({
             type: 'GET',
@@ -88,7 +88,7 @@ const getEquip = () =>
             }
         })
     });
-const editEquip = (data) => 
+const editEquip = (data) =>
     new Promise((resolve, reject) => {
         $.ajax({
             type: 'GET',
@@ -104,12 +104,33 @@ const editEquip = (data) =>
             }
         })
     })
-
+const addLab = (name, manager, equips, available) =>
+    new Promise((resolve, reject) => {
+        $.ajax({
+            type: 'GET',
+            url: '/addlab',
+            data: {
+                name,
+                manager,
+                equips,
+                available
+            },
+            dataType: 'json',
+            cache: false,
+            success(resp) {
+                resolve(resp);
+            },
+            error(resp) {
+                reject(resp);
+            }
+        })
+    })
 export default {
     register,
     login,
     checkLogin,
     addEquip,
     getEquip,
-    editEquip
+    editEquip,
+    addLab
 }
