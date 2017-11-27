@@ -164,6 +164,43 @@ const editLab = (name, manager, time, equip) =>
             }
         })
     });
+
+const addPass = (title, content) =>
+    new Promise((resolve, reject) => {
+        $.ajax({
+            type: 'GET',
+            url: '/addpass',
+            data: {
+                title,
+                content
+            },
+            dataType: 'json',
+            cache: true,
+            success(resp) {
+                resolve(resp);
+            },
+            error(resp) {
+                reject(resp);
+            }
+        })
+    });
+
+const getPass = () =>
+    new Promise((resolve, reject) => {
+        $.ajax({
+            type: 'GET',
+            url: '/getpass',
+            data: {},
+            dataType: 'json',
+            cache: true,
+            success(resp) {
+                resolve(resp);
+            },
+            error(resp) {
+                reject(resp);
+            }
+        })
+    });
 export default {
     register,
     login,
@@ -173,5 +210,7 @@ export default {
     editEquip,
     addLab,
     getLab,
-    editLab
+    editLab,
+    addPass,
+    getPass
 }

@@ -23,15 +23,17 @@
                 </el-menu>
             </el-aside>
             <el-main>
-                <div class="hello" v-show="index === 0">你好，管理员</div>
+                <div class="hello" v-if="index === 0">你好，管理员</div>
                 <equip v-if="index === 1"></equip>
                 <lab v-if="index === 2"></lab>
+                <news v-if="index === 3"></news>
             </el-main>
         </el-container> 
 </template>
 <script>
     import Equip from './manage/equip.vue';
     import Lab from './manage/lab.vue';
+    import News from './manage/news.vue';
     export default {
         props: ['respName'],
         data() {
@@ -46,7 +48,8 @@
         },
         components: {
             Equip,
-            Lab
+            Lab,
+            News
         }
     }
 </script>
