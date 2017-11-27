@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const config = {
     name: 'root',
-    password: '1234',
+    password: '',
     host: 'localhost',
     database: 'zstu_data'
 };

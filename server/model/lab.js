@@ -17,6 +17,9 @@ const Lab = sequelize.define('lab', {
     }
 });
 const lab = Lab.sync({ force: false });
+exports.getLab = function() {
+    return Lab.findAll();
+};
 exports.addLab = function(labName, manager, equipment, reserveTime) {
     return Lab.create({
         labName,
@@ -25,6 +28,14 @@ exports.addLab = function(labName, manager, equipment, reserveTime) {
         reserveTime
     });
 };
-exports.getLab = function() {
-    return Lab.findAll();
+exports.editLab = function(name, manager, equip, time) {
+    return Lab.update({
+        manager,
+        equipment: equip,
+        reserveTime: time
+    }, {
+        where: {
+            labName: name
+        }
+    });
 };

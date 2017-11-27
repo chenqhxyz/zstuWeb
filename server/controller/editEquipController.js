@@ -1,6 +1,5 @@
 const equip = require('../model/equip.js');
-module.exports = async (ctx, next) => {
-    console.log(ctx.query);
+module.exports = async(ctx, next) => {
     const name = ctx.query.name;
     const oldPosition = ctx.query.oldRepository;
     const num = ctx.query.amounts;

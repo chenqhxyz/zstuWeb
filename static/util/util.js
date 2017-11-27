@@ -142,6 +142,28 @@ const getLab = () =>
             }
         })
     });
+
+const editLab = (name, manager, time, equip) =>
+    new Promise((resolve, reject) => {
+        $.ajax({
+            type: 'GET',
+            url: '/editlab',
+            data: {
+                name,
+                manager,
+                time,
+                equip
+            },
+            dataType: 'json',
+            cache: true,
+            success(resp) {
+                resolve(resp);
+            },
+            error(resp) {
+                reject(resp);
+            }
+        })
+    });
 export default {
     register,
     login,
@@ -150,5 +172,6 @@ export default {
     getEquip,
     editEquip,
     addLab,
-    getLab
+    getLab,
+    editLab
 }

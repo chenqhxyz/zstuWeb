@@ -7,6 +7,7 @@ const getEquip = require('../controller/getEquipController.js');
 const editEquip = require('../controller/editEquipController.js');
 const addLab = require('../controller/addLabController.js');
 const getLab = require('../controller/getLabController.js');
+const editLab = require('../controller/editLabController.js');
 const router = new Router();
 
 router.get('/register', register);
@@ -17,4 +18,5 @@ router.get('/getequip', getEquip);
 router.get('/editequip', editEquip);
 router.get('/addlab', addLab);
 router.get('/getlab', getLab);
+router.get('/editlab', editLab);
 module.exports = router;
