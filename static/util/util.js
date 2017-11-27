@@ -125,6 +125,23 @@ const addLab = (name, manager, equips, available) =>
             }
         })
     })
+
+const getLab = () =>
+    new Promise((resolve, reject) => {
+        $.ajax({
+            type: 'GET',
+            url: '/getlab',
+            data: {},
+            dataType: 'json',
+            cache: true,
+            success(resp) {
+                resolve(resp);
+            },
+            error(resp) {
+                reject(resp);
+            }
+        })
+    });
 export default {
     register,
     login,
@@ -132,5 +149,6 @@ export default {
     addEquip,
     getEquip,
     editEquip,
-    addLab
+    addLab,
+    getLab
 }

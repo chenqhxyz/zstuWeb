@@ -93,7 +93,9 @@
                 this.addInf.equips.splice(index, 1);
             }
         },
-        mounted() {}
+        mounted() {
+            util.getLab();
+        }
     }
 </script>
 

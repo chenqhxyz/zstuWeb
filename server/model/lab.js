@@ -2,12 +2,12 @@ const Sequelize = require('sequelize');
 const sequelize = require('../db/db.js');
 
 const Lab = sequelize.define('lab', {
-    labaName: {
+    labName: {
         type: Sequelize.STRING, // 指定值的类型
         primaryKey: true
     },
     manager: {
-        type: Sequelize.STRING(5)
+        type: Sequelize.STRING
     },
     equipment: {
         type: Sequelize.STRING, // 指定值的类型
@@ -17,11 +17,14 @@ const Lab = sequelize.define('lab', {
     }
 });
 const lab = Lab.sync({ force: false });
-exports.addLab = function(labaName, manager, equipment, reserveTime) {
+exports.addLab = function(labName, manager, equipment, reserveTime) {
     return Lab.create({
-        labaName,
+        labName,
         manager,
         equipment,
         reserveTime
     });
+};
+exports.getLab = function() {
+    return Lab.findAll();
 };
