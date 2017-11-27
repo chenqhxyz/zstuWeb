@@ -24,3 +24,16 @@ exports.addPassage = function(title, content) {
         content
     });
 };
+exports.editPass = function(id, title, content) {
+    return Passage.update({
+        title,
+        content
+    }, {
+        where: {
+            id
+        }
+    });
+};
+exports.deletePass = function(id) {
+    return Passage.destroy({where: {id}});
+}

@@ -10,6 +10,8 @@ const getLab = require('../controller/getLabController.js');
 const editLab = require('../controller/editLabController.js');
 const addPass = require('../controller/addPassageController.js');
 const getPass = require('../controller/getPassageController.js');
+const editPass = require('../controller/editPassageController.js');
+const deletePass = require('../controller/deletePassageController.js');
 const router = new Router();
 
 router.get('/register', register);
@@ -23,4 +25,6 @@ router.get('/getlab', getLab);
 router.get('/editlab', editLab);
 router.get('/addpass', addPass);
 router.get('/getpass', getPass);
+router.get('/editpass', editPass);
+router.get('/dpass', deletePass);
 module.exports = router;

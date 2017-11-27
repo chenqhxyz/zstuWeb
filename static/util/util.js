@@ -201,6 +201,45 @@ const getPass = () =>
             }
         })
     });
+
+const editPass = (id, title, content) =>
+    new Promise((resolve, reject) => {
+        $.ajax({
+            type: 'GET',
+            url: '/editpass',
+            data: {
+                id,
+                title,
+                content
+            },
+            dataType: 'json',
+            cache: true,
+            success(resp) {
+                resolve(resp);
+            },
+            error(resp) {
+                reject(resp);
+            }
+        })
+    });
+const deletePass = (id) =>
+    new Promise((resolve, reject) => {
+        $.ajax({
+            type: 'GET',
+            url: '/dpass',
+            data: {
+                id
+            },
+            dataType: 'json',
+            cache: true,
+            success(resp) {
+                resolve(resp);
+            },
+            error(resp) {
+                reject(resp);
+            }
+        })
+    });
 export default {
     register,
     login,
@@ -212,5 +251,7 @@ export default {
     getLab,
     editLab,
     addPass,
-    getPass
+    getPass,
+    editPass,
+    deletePass
 }

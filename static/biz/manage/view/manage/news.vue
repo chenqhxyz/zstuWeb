@@ -9,7 +9,7 @@
             </el-table-column>
             <el-table-column width="200">
                 <template slot-scope="s">
-                    <el-button type="primary">删除文章</el-button>
+                    <el-button type="primary" @click="deletePassage(s.row.id)">删除文章</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -54,17 +54,27 @@
                 if (this.passageModel.type === 1) {
                     util.addPass(this.passageModel.title, this.passageModel.content).then((resp) => {
                         this.passageShow = false;
-                        this.$message({
-                            message: resp.msg,
-                            type: 'success'
-                        });
                         util.getPass().then((resp) => {
                             this.tableModel.splice(0);
                             this.tableModel = this.tableModel.concat(resp.data);
+                            this.$message({
+                                message: '文章输入成功',
+                                type: 'success'
+                            });
                         });
                     });
                 } else if (this.passageModel.type === 2) {
-
+                    util.editPass(this.passageModel.id, this.passageModel.title, this.passageModel.content).then((resp) => {
+                        util.getPass().then((resp) => {
+                            this.tableModel.splice(0);
+                            this.tableModel = this.tableModel.concat(resp.data);
+                            this.$message({
+                                message: '文章修改成功',
+                                type: 'success'
+                            });
+                            this.passageShow = false;
+                        });
+                    });
                 }
             },
             editPassage(title, content, id) {
@@ -76,6 +86,24 @@
                 };
                 this.passageModel = Object.assign({}, obj);
                 this.passageShow = true;
+            },
+            deletePassage(id) {
+                this.$confirm('确定删除该文章?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    util.deletePass(id).then((resp) => {
+                        util.getPass().then((resp) => {
+                            this.tableModel.splice(0);
+                            this.tableModel = this.tableModel.concat(resp.data);
+                            this.$message({
+                                type: 'success',
+                                message: '删除成功!'
+                            });
+                        });
+                    });
+                }).catch(() => {});
             }
         },
         mounted() {
