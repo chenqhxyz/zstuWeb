@@ -27,7 +27,7 @@
                 <equip v-if="index === 1"></equip>
                 <lab v-if="index === 2"></lab>
             </el-main>
-        </el-container>   
+        </el-container> 
 </template>
 <script>
     import Equip from './manage/equip.vue';

@@ -1,12 +1,17 @@
 <template>
-    <components :is="currentView" :resp-name="respName"></components>
+    <div>
+        <components :is="currentView" :resp-name="respName"></components>
+        <div class="back" @click="back">
+            <i class="el-icon-back"></i> 
+        </div>
+    </div>
 </template>
-      
+
 <script>
-import util from '../../../util/util.js';
-import Manager from './manager.vue';
-import Student from './student.vue';
-import Teacher from './teacher.vue';
+    import util from '../../../util/util.js';
+    import Manager from './manager.vue';
+    import Student from './student.vue';
+    import Teacher from './teacher.vue';
     export default {
         data() {
             return {
@@ -15,6 +20,9 @@ import Teacher from './teacher.vue';
             };
         },
         methods: {
+            back() {
+                window.location.href = '//local.zstu.com';
+            }
         },
         created() {
             util.checkLogin().then((resp) => {
@@ -38,8 +46,28 @@ import Teacher from './teacher.vue';
         }
     }
 </script>
-      
+
 <style lang="less">
-@import '../../reset.less';
-.reset();
+    @import '../../reset.less';
+    .reset();
+    .back {
+        position: fixed;
+        right: 100px;
+        bottom: 100px;
+        z-index: 9999;
+        width: 50px;
+        height: 50px;
+        text-align: center;
+        line-height: 50px;
+        border-radius: 50%;
+        background: #2888d9;
+        cursor: pointer;
+        .el-icon-back {
+            color: #fff;
+            font-size: 20px;
+        }
+        &:hover {
+            background: #87c5fa;
+        }
+    }
 </style>
