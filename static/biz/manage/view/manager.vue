@@ -27,6 +27,7 @@
                 <equip v-if="index === 1"></equip>
                 <lab v-if="index === 2"></lab>
                 <news v-if="index === 3"></news>
+                <message v-if="index===4"></message>
             </el-main>
         </el-container> 
 </template>
@@ -34,6 +35,7 @@
     import Equip from './manage/equip.vue';
     import Lab from './manage/lab.vue';
     import News from './manage/news.vue';
+    import Message from './manage/message.vue';
     export default {
         props: ['respName'],
         data() {
@@ -49,7 +51,8 @@
         components: {
             Equip,
             Lab,
-            News
+            News,
+            Message
         }
     }
 </script>

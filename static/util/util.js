@@ -240,6 +240,24 @@ const deletePass = (id) =>
             }
         })
     });
+const sendNotice = (content) =>
+    new Promise((resolve, reject) => {
+        $.ajax({
+            type: 'GET',
+            url: '/tip',
+            data: {
+                content
+            },
+            dataType: 'json',
+            cache: true,
+            success(resp) {
+                resolve(resp);
+            },
+            error(resp) {
+                reject(resp);
+            }
+        })
+    });
 export default {
     register,
     login,
@@ -253,5 +271,6 @@ export default {
     addPass,
     getPass,
     editPass,
-    deletePass
+    deletePass,
+    sendNotice
 }
