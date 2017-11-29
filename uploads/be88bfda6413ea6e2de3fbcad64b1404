@@ -1,0 +1,12 @@
+http://m.beibei.com/HX-BETA.html?beta=32&url=http://local.beibei.com/imp/2017/8/votingFamily.html
+
+单行超出省略号
+overflow:hidden;
+text-overflow: ellipsis;
+white-space: nowrap;
+
+多行超出省略
+display: -webkit-box;
+-webkit-box-orient: vertical;
+-webkit-line-clamp: 3;
+overflow: hidden;

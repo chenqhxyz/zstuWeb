@@ -13,7 +13,11 @@ const getPass = require('../controller/getPassageController.js');
 const editPass = require('../controller/editPassageController.js');
 const deletePass = require('../controller/deletePassageController.js');
 const tip = require('../controller/tipController.js');
+const postDoc = require('../controller/docUploadController.js');
 const router = new Router();
+
+const multer = require('koa-multer');
+const upload = multer({ dest: 'uploads/' });
 
 router.get('/register', register);
 router.get('/login', login);
@@ -29,4 +33,5 @@ router.get('/getpass', getPass);
 router.get('/editpass', editPass);
 router.get('/dpass', deletePass);
 router.get('/tip', tip);
+router.post('/postdoc', upload.single('file'), postDoc);
 module.exports = router;
