@@ -20,3 +20,6 @@ exports.writeDoc = function(name, path) {
         path
     });
 };
+exports.getDocs = function() {
+    return Doc.findAll();
+}

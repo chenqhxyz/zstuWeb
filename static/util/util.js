@@ -258,6 +258,24 @@ const sendNotice = (content) =>
             }
         })
     });
+
+const getDocs = () =>
+    new Promise((resolve, reject) => {
+        $.ajax({
+            type: 'GET',
+            url: '/getdocs',
+            data: {
+            },
+            dataType: 'json',
+            cache: true,
+            success(resp) {
+                resolve(resp);
+            },
+            error(resp) {
+                reject(resp);
+            }
+        })
+    });
 export default {
     register,
     login,
@@ -272,5 +290,6 @@ export default {
     getPass,
     editPass,
     deletePass,
-    sendNotice
+    sendNotice,
+    getDocs
 }
