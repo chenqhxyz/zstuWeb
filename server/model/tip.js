@@ -22,4 +22,7 @@ exports.addTip = function (content) {
             id: 1
         }
     });
-}
+};
+exports.getTip = function() {
+    return Tip.findAll();
+};

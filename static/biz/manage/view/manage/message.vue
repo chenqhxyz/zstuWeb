@@ -16,7 +16,7 @@
         },
         methods: {
             send() {
-                util.sendNotice(this.content).then((resp) => {
+                util.sendNotice(0, this.content).then((resp) => {
                     this.$message({
                         message: resp.msg,
                         type: 'success'

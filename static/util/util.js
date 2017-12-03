@@ -240,12 +240,13 @@ const deletePass = (id) =>
             }
         })
     });
-const sendNotice = (content) =>
+const sendNotice = (type, content='') =>
     new Promise((resolve, reject) => {
         $.ajax({
             type: 'GET',
             url: '/tip',
             data: {
+                type,
                 content
             },
             dataType: 'json',
