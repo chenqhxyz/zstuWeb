@@ -8,18 +8,25 @@ const Doc = sequelize.define('doc', {
     },
     path: {
         type: Sequelize.STRING
+    },
+    url: {
+        type: Sequelize.STRING
     }
 },{
     timestamps: false
 });
 const doc = Doc.sync({ force: false });
 
-exports.writeDoc = function(name, path) {
+exports.writeDoc = function(name, path, url) {
     return Doc.create({
         name,
-        path
+        path,
+        url
     });
 };
 exports.getDocs = function() {
     return Doc.findAll();
+};
+exports.deleteDocs = function(path) {
+    return Doc.destroy({where: {path}});
 }

@@ -128,11 +128,12 @@
                 const manager = this.addInf.manager;
                 const equips = JSON.stringify(this.addInf.equips);
                 const available = JSON.stringify(this.addInf.available);
-                util.addLab(name, manager, equips, available);
-                this.addModal = false;
-                util.getLab().then((resp) => {
-                    this.tableModal.splice(0);
-                    this.tableModal = this.tableModal.concat(resp.data);
+                util.addLab(name, manager, equips, available).then((resp) => {
+                    this.addModal = false;
+                    util.getLab().then((resp) => {
+                        this.tableModal.splice(0);
+                        this.tableModal = this.tableModal.concat(resp.data);
+                    });
                 });
             },
             showAdd() {

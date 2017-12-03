@@ -276,6 +276,105 @@ const getDocs = () =>
             }
         })
     });
+const deleteDoc = (path) =>
+    new Promise((resolve, reject) => {
+        $.ajax({
+            type: 'GET',
+            url: '/deletedoc',
+            data: {
+                path
+            },
+            dataType: 'json',
+            cache: false,
+            success(resp) {
+                resolve(resp);
+            },
+            error(resp) {
+                reject(resp);
+            }
+        })
+    });
+const teacherInf = (name, lessons, classes) =>
+    new Promise((resolve, reject) => {
+        $.ajax({
+            type: 'GET',
+            url: '/teacher',
+            data: {
+                name,
+                lessons,
+                classes
+            },
+            dataType: 'json',
+            cache: false,
+            success(resp) {
+                resolve(resp);
+            },
+            error(resp) {
+                reject(resp);
+            }
+        })
+    });
+const getTeacher = (name) => 
+    new Promise((resolve, reject) => {
+        $.ajax({
+            type: 'GET',
+            url: '/getteacher',
+            data: {
+                name
+            },
+            dataType: 'json',
+            cache: true,
+            success(resp) {
+                resolve(resp);
+            },
+            error(resp) {
+                reject(resp);
+            }
+        })
+    });
+const arrange = (type, name='', theClass='', lesson='', lab='', time='', teacher='') =>
+    new Promise((resolve, reject) => {
+        $.ajax({
+            type: 'GET',
+            url: '/arrange',
+            data: {
+                type,
+                name,
+                theClass,
+                lesson,
+                lab,
+                time,
+                teacher
+            },
+            dataType: 'json',
+            cache: true,
+            success(resp) {
+                resolve(resp);
+            },
+            error(resp) {
+                reject(resp);
+            }
+        })
+    });
+const getExps = (type, path='') =>
+    new Promise((resolve, reject) => {
+        $.ajax({
+            type: 'GET',
+            url: '/getexp',
+            data: {
+                type,
+                path
+            },
+            dataType: 'json',
+            cache: true,
+            success(resp) {
+                resolve(resp);
+            },
+            error(resp) {
+                reject(resp);
+            }
+        })
+    });
 export default {
     register,
     login,
@@ -291,5 +390,10 @@ export default {
     editPass,
     deletePass,
     sendNotice,
-    getDocs
+    getDocs,
+    deleteDoc,
+    teacherInf,
+    getTeacher,
+    arrange,
+    getExps
 }

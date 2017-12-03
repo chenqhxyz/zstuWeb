@@ -4,6 +4,6 @@ module.exports = async(ctx, next) => {
     ctx.body = {
         success: true,
         data
-    }
+    };
     next();
 }
