@@ -31,7 +31,6 @@
                 <el-radio-group v-model="radio">
                     <el-radio label="1">学生</el-radio>
                     <el-radio label="2">教师</el-radio>
-                    <el-radio label="3">管理员</el-radio>
                 </el-radio-group>
             </div>
             <div class="column">

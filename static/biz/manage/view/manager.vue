@@ -20,20 +20,25 @@
                     <el-menu-item index="6" class="el-item">
                         <span slot="title">教学文档管理</span>
                     </el-menu-item>
+                    <el-menu-item index="7" class="el-item">
+                        <span slot="title">教师个人中心</span>
+                    </el-menu-item>
                 </el-menu>
             </el-aside>
             <el-main>
-                <div class="hello" v-if="index === 0">你好，管理员</div>
+                <div class="hello" v-if="index === 0">你好，{{respName}}</div>
                 <equip v-if="index === 1"></equip>
                 <lab v-if="index === 2"></lab>
                 <news v-if="index === 3"></news>
                 <message v-if="index===4"></message>
                 <report v-if="index===5"></report>
                 <document v-if="index===6"></document>
+                <teacher v-if="index===7" :resp-name="respName"></teacher>
             </el-main>
         </el-container> 
 </template>
 <script>
+    import Teacher from './teacher.vue';
     import Equip from './manage/equip.vue';
     import Lab from './manage/lab.vue';
     import News from './manage/news.vue';
@@ -41,7 +46,7 @@
     import Report from './manage/report.vue';
     import Document from './manage/document.vue';
     export default {
-        props: ['respName'],
+        props: ['respName', ''],
         data() {
             return {
                 index: 0
@@ -58,7 +63,8 @@
             News,
             Message,
             Report,
-            Document
+            Document,
+            Teacher
         }
     }
 </script>
@@ -70,7 +76,7 @@
         cursor: pointer;
         .el-item {
             overflow: hidden;
-            height: 50px;
+            height: 40px;
             line-height: 50px;
         }
     }

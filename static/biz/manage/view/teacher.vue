@@ -2,7 +2,7 @@
     <div>
         <el-container>
             <el-header>
-                <div class="teacher-center">教师个人中心<span class="greeting">你好，{{respName}} (请先填写好个人信息，才能进行其他操作噢)</span></div>
+                <div class="teacher-center">教师个人中心<span class="greeting">(请先填写好个人信息，才能进行其他操作噢)</span></div>
             </el-header>
             <el-main>
                 <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">

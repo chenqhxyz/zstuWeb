@@ -35,8 +35,6 @@
                 if (+resp.type === 1) {
                     this.currentView = 'Student';
                 } else if (+resp.type === 2) {
-                    this.currentView = 'Teacher';
-                } else if (+resp.type === 3) {
                     this.currentView = 'Manager';
                 }
             });
