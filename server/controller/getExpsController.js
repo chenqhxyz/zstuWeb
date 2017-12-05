@@ -2,7 +2,8 @@ const exp = require('../model/exp.js');
 module.exports = async(ctx, next) => {
     const type = ctx.query.type;
     if (+type === 0) {
-        const data = await exp.getExps();
+        const name = ctx.session.name;
+        const data = await exp.getExps(name);
         ctx.body = {
             success: true,
             data

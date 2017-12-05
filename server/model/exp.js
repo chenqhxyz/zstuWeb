@@ -28,8 +28,12 @@ exports.writeExp = function(name, path, url, teacher) {
         teacher
     });
 };
-exports.getExps = function() {
-    return Exp.findAll();
+exports.getExps = function(teacher) {
+    return Exp.findAll({
+        where: {
+            teacher
+        }
+    });
 };
 exports.deleteExp = function(path) {
     return Exp.destroy({where: {path}});

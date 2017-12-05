@@ -6,6 +6,7 @@ module.exports = async (ctx, next) => {
             success: true,
             msg: '登陆成功'
         };
+        ctx.session.account = data.account;
         ctx.session.name = data.userName;
         ctx.session.type = data.type;
     } else if (data && ctx.query.password !== data.password){

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <components :is="currentView" :resp-name="respName"></components>
+        <components :is="currentView" :resp-name="respName" :resp-account="respAccount"></components>
         <div class="back" @click="back">
             <i class="el-icon-back"></i> 
         </div>
@@ -16,6 +16,7 @@
         data() {
             return {
                 respName: '',
+                respAccount: '',
                 currentView: ''
             };
         },
@@ -29,6 +30,7 @@
                 if (!resp.success) {
                     window.location.href = 'http://local.zstu.com';
                 }
+                this.respAccount = resp.account;
                 this.respName = resp.name;
                 if (+resp.type === 1) {
                     this.currentView = 'Student';

@@ -10,6 +10,7 @@
 <script>
 import util from '../../../../util/util.js';
     export default {
+        props: ['respName'],
         data() {
             return {
                 fileList: []

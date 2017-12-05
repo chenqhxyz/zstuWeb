@@ -21,6 +21,9 @@ const getTeacher = require('../controller/getTeacherController.js');
 const arrange = require('../controller/classArrangeController.js');
 const exp = require('../controller/expController.js');
 const getExp = require('../controller/getExpsController.js');
+const student = require('../controller/studentController.js');
+const report = require('../controller/reportController.js');
+const opReport = require('../controller/opReportController.js');
 const router = new Router();
 
 const multer = require('koa-multer');
@@ -48,4 +51,7 @@ router.get('/getteacher', getTeacher);
 router.get('/arrange', arrange);
 router.post('/exp', upload.single('file'), exp);
 router.get('/getexp', getExp);
+router.get('/student', student);
+router.post('/report', upload.single('file'), report);
+router.get('/opreport', opReport);
 module.exports = router;

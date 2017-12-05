@@ -32,6 +32,13 @@ exports.getInf = function(name) {
         }
     });
 };
+exports.getByClass = function(theClass) {
+    return Arrange.findAll({
+        where: {
+            theClass
+        }
+    });
+};
 exports.dropInf = function(name) {
     return Arrange.destroy({where: {name}});
 };

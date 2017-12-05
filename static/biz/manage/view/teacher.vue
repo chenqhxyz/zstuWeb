@@ -8,10 +8,11 @@
                 <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
                     <el-menu-item index="1">实验课程安排</el-menu-item>
                     <el-menu-item index="2">实验报告下载</el-menu-item>
-                    <el-menu-item index="3">上传教学资料</el-menu-item>
+                    <el-menu-item index="3" :resp-name="respName">上传教学资料</el-menu-item>
                     <el-menu-item index="4">信息填写</el-menu-item>
                 </el-menu>
                 <arrange v-if="indexControll === 1" :resp-name="respName"></arrange>
+                <report v-if="indexControll === 2"></report>
                 <exp v-if="indexControll === 3"></exp>
                 <personal v-if="indexControll === 4" :resp-name="respName"></personal>
             </el-main>
@@ -22,6 +23,7 @@
 import Personal from './teacher/personal.vue';
 import Arrange from './teacher/arrange.vue';
 import Exp from './teacher/exp.vue';
+import Report from './teacher/report.vue';
     export default {
         props: ['respName'],
         data() {
@@ -40,7 +42,8 @@ import Exp from './teacher/exp.vue';
         components: {
             Personal,
             Arrange,
-            Exp
+            Exp,
+            Report
         }
     }
 </script>

@@ -38,6 +38,13 @@ module.exports = async(ctx, next) => {
             success: true,
             data
         };
+    } else if (+type === 5) {
+        const theClass = ctx.query.theClass;
+        const data = await arrange.getByClass(theClass);
+        ctx.body = {
+            success: true,
+            data
+        }
     }
     next();
 };

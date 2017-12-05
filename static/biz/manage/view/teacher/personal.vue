@@ -62,7 +62,7 @@ import util from '../../../../util/util.js';
             confirm() {
                 const inputclasses = JSON.stringify(this.classes);
                 const inputLessons = JSON.stringify(this.lessons);
-                util.teacherInf(this.respName, inputLessons, inputclasses).then((resp) => {
+                util.teacherInf(0, this.respName, inputLessons, inputclasses).then((resp) => {
                     this.initTeacher();
                     this.$message({
                         message: resp.msg,

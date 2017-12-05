@@ -295,12 +295,13 @@ const deleteDoc = (path) =>
             }
         })
     });
-const teacherInf = (name, lessons, classes) =>
+const teacherInf = (type, name='', lessons='', classes='') =>
     new Promise((resolve, reject) => {
         $.ajax({
             type: 'GET',
             url: '/teacher',
             data: {
+                type,
                 name,
                 lessons,
                 classes
@@ -376,6 +377,47 @@ const getExps = (type, path='') =>
             }
         })
     });
+const opStudent = (type, account, name='', theClass='') =>
+    new Promise((resolve, reject) => {
+        $.ajax({
+            type: 'GET',
+            url: '/student',
+            data: {
+                type,
+                account,
+                name,
+                theClass
+            },
+            dataType: 'json',
+            cache: true,
+            success(resp) {
+                resolve(resp);
+            },
+            error(resp) {
+                reject(resp);
+            }
+        })
+    });
+const opReports = (type, path='', theClass='') =>
+    new Promise((resolve, reject) => {
+        $.ajax({
+            type: 'GET',
+            url: '/opreport',
+            data: {
+                type,
+                path,
+                theClass
+            },
+            dataType: 'json',
+            cache: true,
+            success(resp) {
+                resolve(resp);
+            },
+            error(resp) {
+                reject(resp);
+            }
+        })
+    });
 export default {
     register,
     login,
@@ -396,5 +438,7 @@ export default {
     teacherInf,
     getTeacher,
     arrange,
-    getExps
+    getExps,
+    opStudent,
+    opReports
 }
