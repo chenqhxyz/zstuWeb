@@ -88,15 +88,15 @@
             equip() {
                 this.equipVisible = false;
                 util.addEquip(this.form.name, this.form.repository, +this.form.amounts).then((resp) => {
+                    this.getData();
+                    this.form.name = '';
+                    this.form.repository = '';
+                    this.form.amounts = '';
                     this.$message({
                         message: resp.msg,
                         type: 'success'
                     });
-                    this.getData();
                 });
-                this.form.name = '';
-                this.form.repository = '';
-                this.form.amounts = '';
             },
             editDialog(name, position, amounts) {
                 const editEquip = {
