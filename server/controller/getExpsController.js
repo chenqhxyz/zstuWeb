@@ -17,6 +17,12 @@ module.exports = async(ctx, next) => {
             success: true,
             msg: '删除成功'
         };
+    } else if (+type === 2) {
+        const data = await exp.getAllExps();
+        ctx.body = {
+            success: true,
+            data
+        };
     }
     next();
 }

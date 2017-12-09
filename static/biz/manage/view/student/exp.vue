@@ -21,7 +21,7 @@ import util from '../../../../util/util';
         methods: {
         },
         mounted() {
-            util.getExps(0).then((resp) => {
+            util.getExps(2).then((resp) => {
                 resp.data.forEach((item) => {
                     this.expModel.push(item);
                 })

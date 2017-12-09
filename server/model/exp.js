@@ -37,4 +37,7 @@ exports.getExps = function(teacher) {
 };
 exports.deleteExp = function(path) {
     return Exp.destroy({where: {path}});
+};
+exports.getAllExps = function() {
+    return Exp.findAll({});
 }
